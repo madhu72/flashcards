@@ -1,0 +1,60 @@
+<.flash_group flash={@flash} />
+<div class="min-h-screen bg-gradient-to-br from-orange-50 to-pink-100 flex flex-col">
+  <header class="py-8 px-8 text-center min-w-full">
+    <h1 class="text-5xl font-extrabold text-orange-600 drop-shadow mb-4">Welcome to FlashCards!</h1>
+    <p class="text-lg text-zinc-700 w-full mb-6">
+      <span class="font-semibold text-orange-700">FlashCards</span> helps you master any topic with smart, interactive flashcards.<br/>
+      Study, collaborate, and track your progress—all in one beautiful, intuitive place.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+      <a href="/register" class="rounded bg-orange-500 px-8 py-3 text-white font-semibold shadow hover:bg-orange-600 transition text-lg">Get Started</a>
+      <%= if @current_user do %>
+  <a href="/dashboard" class="rounded border border-orange-500 px-8 py-3 text-orange-600 font-semibold bg-white hover:bg-orange-50 transition text-lg">Goto Dashboard</a>
+<% else %>
+  <a href="/sign-in" class="rounded border border-orange-500 px-8 py-3 text-orange-600 font-semibold bg-white hover:bg-orange-50 transition text-lg">Sign In</a>
+<% end %>
+    </div>
+  </header>
+
+  <main class="flex-1 px-8 py-8 min-w-full">
+    <section class="min-w-full">
+      <h2 class="text-2xl font-bold text-orange-600 text-center mb-8">Why You'll Love FlashCards</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 w-full">
+        <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center hover:scale-105 transition-transform">
+          <svg class="w-10 h-10 mb-3 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          <h3 class="font-semibold text-lg mb-2">Effortless Creation</h3>
+          <p class="text-zinc-600">Add flashcards with text, images, or code. Organize by decks and subjects.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center hover:scale-105 transition-transform">
+          <svg class="w-10 h-10 mb-3 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <h3 class="font-semibold text-lg mb-2">Smart Study Modes</h3>
+          <p class="text-zinc-600">Practice with spaced repetition, quizzes, and review sessions for better retention.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center hover:scale-105 transition-transform">
+          <svg class="w-10 h-10 mb-3 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 8h10M7 16h10M5 12h14"/></svg>
+          <h3 class="font-semibold text-lg mb-2">Collaborate & Share</h3>
+          <p class="text-zinc-600">Invite friends or classmates to study together and share your decks.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center hover:scale-105 transition-transform">
+          <svg class="w-10 h-10 mb-3 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2"/><path d="M16 11a4 4 0 01-8 0V7a4 4 0 118 0v4z"/></svg>
+          <h3 class="font-semibold text-lg mb-2">Track Your Progress</h3>
+          <p class="text-zinc-600">See your stats and streaks, and celebrate your learning milestones.</p>
+        </div>
+      </div>
+    </section>
+    <section class="mt-16 w-full text-center px-8">
+      <h2 class="text-xl font-bold text-orange-600 mb-4">How to Get Started</h2>
+      <ol class="list-decimal list-inside text-zinc-700 space-y-2 text-left w-full max-w-2xl mx-auto">
+        <li>Register for a free account, or sign in if you already have one.</li>
+        <li>Create your first flashcard deck—add cards for any subject or topic.</li>
+        <li>Study your deck using smart review tools.</li>
+        <li>Share decks or challenge friends to study together!</li>
+      </ol>
+      <a href="/register" class="mt-8 inline-block rounded bg-orange-500 px-10 py-4 text-white font-bold shadow hover:bg-orange-600 transition text-lg">Join FlashCards Now</a>
+    </section>
+  </main>
+
+  <footer class="mt-16 py-6 text-center text-zinc-400 text-sm w-full px-8">
+    <p>Built with ❤️ using Elixir, Phoenix, and Ash Framework.</p>
+  </footer>
+</div>

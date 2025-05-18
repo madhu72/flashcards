@@ -1,0 +1,18 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* This file is for your main application CSS */
+/* Only style submit buttons inside your auth card */
+#user-password-sign-in-with-password button[type="submit"] {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg shadow transition w-full mt-4;
+}
+
+#user-password-register-with-password-wrapper button[type="submit"] {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg shadow transition w-full mt-4;
+}
+
+#user-password-request-password-reset-token-wrapper button[type="submit"] {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg shadow transition w-full mt-4;
+}
+    

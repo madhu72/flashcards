@@ -1,0 +1,21 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardGradient" x1="0" y1="0" x2="160" y2="160" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FDBA74"/>
+      <stop offset="1" stop-color="#FDE68A"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="160" height="160" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#FB923C" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <!-- Main Card -->
+  <rect x="24" y="32" width="112" height="88" rx="18" fill="url(#cardGradient)" filter="url(#shadow)" stroke="#FB923C" stroke-width="3"/>
+  <!-- Inner Card -->
+  <rect x="38" y="46" width="84" height="60" rx="10" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2"/>
+  <!-- Accent Line (like a card tab) -->
+  <rect x="38" y="60" width="84" height="8" rx="4" fill="#FBBF24" opacity="0.7"/>
+  <!-- Lightning Bolt (flash) icon -->
+  <polygon points="88,62 75,100 90,100 82,120 105,86 92,86 99,62" fill="#FB923C" stroke="#F59E42" stroke-width="2"/>
+  <!-- Brand Text -->
+  <text x="50%" y="145" text-anchor="middle" fill="#FB923C" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="bold" letter-spacing="1">FlashCards</text>
+</svg>

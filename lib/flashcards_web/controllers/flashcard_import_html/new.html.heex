@@ -1,0 +1,58 @@
+<div class="w-screen h-screen flex flex-col">
+  <!-- Header -->
+  <header class="flex-none h-16 bg-blue-700 text-white flex items-center px-8 shadow z-10">
+    <h1 class="text-2xl font-bold tracking-tight">Flashcards App</h1>
+  </header>
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Left Nav -->
+    <nav class="flex-none w-48 bg-blue-50 border-r border-blue-100 flex flex-col items-center py-8">
+      <div class="mb-6 font-semibold text-blue-700">Navigation</div>
+      <ul class="space-y-4 w-full text-center">
+        <li><a href="/flashcards" class="text-blue-700 hover:underline font-medium">All Flashcards</a></li>
+        <li><a href="/flashcards/import" class="text-blue-700 hover:underline font-medium">Import</a></li>
+      </ul>
+    </nav>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col items-center justify-center bg-gray-50 overflow-hidden">
+      <div class="w-full max-w-lg flex-1 flex flex-col justify-center items-center">
+        <div class="w-full bg-white rounded-xl shadow-lg p-8 mt-8 mb-4">
+          <h2 class="text-3xl font-bold mb-6 text-center text-blue-700">Import Flashcards</h2>
+          <%= if @conn.assigns[:phoenix_flash] do %>
+            <%= for {type, msg} <- @conn.assigns.phoenix_flash do %>
+              <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 10000)" class={"mb-4 p-3 rounded text-center transition-opacity duration-500 " <> (if type == :info, do: "bg-green-100 text-green-800 border border-green-300", else: "bg-red-100 text-red-800 border border-red-300")}>
+                <span><%= msg %></span>
+                <button type="button" class="ml-4 text-sm text-gray-600 hover:text-gray-900" @click="show = false">&times;</button>
+              </div>
+            <% end %>
+          <% end %>
+          <form method="post" enctype="multipart/form-data" action={~p"/flashcards/import"} class="space-y-6">
+            <input type="hidden" name="_csrf_token" value={get_csrf_token()} />
+            <div>
+              <label class="block mb-2 font-semibold text-gray-700">Select a JSON file to import:</label>
+              <input type="file" name="file" accept="application/json" required class="block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400" />
+            </div>
+            <div class="flex items-center">
+              <input type="checkbox" name="overwrite" value="true" id="overwrite" class="mr-2 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+              <label for="overwrite" class="text-gray-700">Overwrite existing flashcards</label>
+            </div>
+            <button type="submit" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+              Import
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <!-- Right Nav -->
+    <aside class="flex-none w-48 bg-blue-50 border-l border-blue-100 flex flex-col items-center py-8">
+      <div class="mb-6 font-semibold text-blue-700">Quick Links</div>
+      <ul class="space-y-4 w-full text-center">
+        <li><a href="https://hexdocs.pm/ash" class="text-blue-700 hover:underline font-medium" target="_blank">Ash Docs</a></li>
+        <li><a href="https://hexdocs.pm/phoenix_live_view" class="text-blue-700 hover:underline font-medium" target="_blank">LiveView Docs</a></li>
+      </ul>
+    </aside>
+  </div>
+  <!-- Footer -->
+  <footer class="flex-none h-12 bg-gray-100 border-t border-gray-200 flex items-center justify-center text-gray-500 text-sm">
+    &copy; <%= Date.utc_today().year %> Flashcards App. All rights reserved.
+  </footer>
+</div>

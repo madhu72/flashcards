@@ -1,0 +1,18 @@
+<nav class="bg-blue-700 text-white px-4 py-3 flex justify-between items-center shadow">
+  <div class="flex items-center space-x-4">
+    <a href="/" class="text-2xl font-bold tracking-tight hover:text-blue-200 transition">Flashcards</a>
+  </div>
+  <div class="flex items-center space-x-4">
+    <%= if @current_user do %>
+      <span class="hidden sm:inline">Hello, <%= @current_user.email %>!</span>
+      <a href="/sign-out" data-method="delete" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600 transition">Logout</a>
+    <% else %>
+      <a href="/sign-in" class="px-4 py-2 rounded hover:bg-blue-600 transition">Sign In</a>
+      <a href="/register" class="px-4 py-2 rounded bg-white text-blue-700 hover:bg-blue-100 transition">Register</a>
+    <% end %>
+  </div>
+</nav>
+<.flash_group flash={@flash} />
+<div class="max-w-full mx-auto p-0">
+  {@inner_content}
+</div>
