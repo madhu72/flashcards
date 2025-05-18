@@ -12,8 +12,14 @@ defmodule Flashcards.Flashcards.Flashcard do
     uuid_primary_key :id
     attribute :question, :string, allow_nil?: false
     attribute :answer, :string, allow_nil?: false
+    attribute :created_by, :uuid, allow_nil?: false
+    attribute :group_id, :uuid, allow_nil?: false
     create_timestamp :inserted_at
     update_timestamp :updated_at
+  end
+
+  relationships do
+    belongs_to :group, Flashcards.Flashcards.FlashcardGroup, source_attribute: :group_id
   end
 
   actions do
@@ -21,11 +27,11 @@ defmodule Flashcards.Flashcards.Flashcard do
 
     create :create do
       primary? true
-      accept [:question, :answer]
+      accept [:question, :answer, :created_by, :group_id]
     end
     update :update do
       primary? true
-      accept [:question, :answer]
+      accept [:question, :answer, :created_by, :group_id]
     end
     destroy :destroy do
       primary? true

@@ -3,6 +3,7 @@ defmodule Flashcards.Flashcards do
 
   resources do
     resource Flashcards.Flashcards.Flashcard
+    resource Flashcards.Flashcards.FlashcardGroup
   end
 
   alias Flashcards.Flashcards.Flashcard
