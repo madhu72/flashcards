@@ -5,14 +5,28 @@ defmodule FlashcardsWeb.MyDashboard do
   on_mount {FlashcardsWeb.LiveUserAuth, :ensure_authenticated}
 
   def update(assigns, socket) do
-    {:ok, assign_new(socket, :show_flashcards, fn -> false end) |> assign(assigns)}
+    # Ensure user_id is always present in assigns for FlashcardsComponent
+    user_id = Map.get(assigns, :user_id)
+    socket =
+      socket
+      |> assign_new(:show_flashcards, fn -> false end)
+      |> assign_new(:show_play, fn -> false end)
+      |> assign(assigns)
+      |> assign(:user_id, user_id)
+    {:ok, socket}
   end
 
   def handle_event("toggle_flashcards", _params, socket) do
     {:noreply, update(socket, :show_flashcards, &(!&1))}
   end
 
+  def handle_event("toggle_play", _params, socket) do
+    {:noreply, update(socket, :show_play, &(!&1))}
+  end
+
   def render(assigns) do
+    flashcards = if is_list(assigns[:flashcards]), do: assigns[:flashcards], else: []
+    groups = if is_list(assigns[:groups]), do: assigns[:groups], else: []
     ~H"""
     <div class="p-8 text-center">
       <h2 class="text-3xl font-bold text-blue-700 mb-4">My Dashboard</h2>
@@ -29,14 +43,30 @@ defmodule FlashcardsWeb.MyDashboard do
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h4"/></svg>
           My Flashcards
         </button>
-        <a href="/play"
+        <button phx-click="toggle_play" phx-target={@myself}
           class="flex items-center gap-2 px-6 py-2 rounded bg-blue-600 text-white font-bold shadow border-2 border-blue-600 hover:bg-blue-700 hover:border-blue-800 transition">
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Play
-        </a>
+        </button>
       </div>
       <%= if @show_flashcards do %>
-        <.live_component module={FlashcardsComponent} id="inline-flashcards" current_user={@current_user} />
+        <.live_component
+          module={FlashcardsComponent}
+          id="inline-flashcards"
+          current_user={@current_user}
+          user_id={Map.get(assigns, :user_id)}
+          flashcards={flashcards}
+          groups={groups}
+        />
+      <% end %>
+      <%= if assigns[:show_play] do %>
+        <.live_component
+          module={FlashcardsWeb.PlayComponent}
+          id="inline-play"
+          current_user={@current_user}
+          user_id={Map.get(assigns, :user_id)}
+          groups={groups}
+        />
       <% end %>
 
     </div>

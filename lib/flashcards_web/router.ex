@@ -39,6 +39,7 @@ defmodule FlashcardsWeb.Router do
     live_session :default, on_mount: [{FlashcardsWeb.LiveUserAuth, :assign_user_email}] do
       live "/flashcards", FlashcardsLive
       live "/dashboard", DashboardLive
+      live "/play", PlayLive
     end
     get "/flashcards/import", FlashcardImportController, :new
     post "/flashcards/import", FlashcardImportController, :create

@@ -15,6 +15,7 @@ defmodule FlashcardsWeb.AuthController do
     conn
     |> delete_session(:return_to)
     |> store_in_session(user)
+    |> put_session("user_id", user.id)
     |> assign(:current_user, user)
     |> put_resp_cookie("user_email", user.email, sign: true)
     |> put_resp_cookie("user_email_display", to_string(user.email), sign: false, path: "/", http_only: false)

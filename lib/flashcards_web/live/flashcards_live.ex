@@ -8,7 +8,7 @@ defmodule FlashcardsWeb.FlashcardsLive do
   alias Flashcards.Flashcards.Flashcard
 
   @impl true
-  @page_size 5
+  @page_size 6
 
   def mount(_params, _session, socket) do
     page = 1
