@@ -4,6 +4,7 @@ defmodule Flashcards.Flashcards do
   resources do
     resource Flashcards.Flashcards.Flashcard
     resource Flashcards.Flashcards.FlashcardGroup
+    resource Flashcards.Accounts.User
   end
 
   alias Flashcards.Flashcards.Flashcard
@@ -26,8 +27,9 @@ defmodule Flashcards.Flashcards do
 
     imported =
       filtered
-      |> Enum.map(fn %{question: q, answer: a} = card ->
-        result = Ash.create(Flashcard, %{question: q, answer: a})
+      |> Enum.map(fn card ->
+        IO.inspect(card, label: "CARD TO CREATE")
+        result = Ash.create(Flashcard, card)
         IO.inspect({card, result}, label: "CREATE RESULT")
         case result do
           {:ok, _card} -> :ok

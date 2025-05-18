@@ -21,6 +21,11 @@ defmodule Flashcards.Flashcards.FlashcardGroup do
   end
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :update, :destroy]
+
+    create :create do
+      primary? true
+      accept [:name, :created_by]
+    end
   end
 end

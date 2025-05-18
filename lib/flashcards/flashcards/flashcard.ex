@@ -20,6 +20,7 @@ defmodule Flashcards.Flashcards.Flashcard do
 
   relationships do
     belongs_to :group, Flashcards.Flashcards.FlashcardGroup, source_attribute: :group_id
+    belongs_to :created_by_user, Flashcards.Accounts.User, source_attribute: :created_by, allow_nil?: true
   end
 
   actions do

@@ -1,15 +1,49 @@
 <nav class="bg-blue-700 text-white px-4 py-3 flex justify-between items-center shadow">
   <div class="flex items-center space-x-4">
-    <a href="/" class="text-2xl font-bold tracking-tight hover:text-blue-200 transition">Flashcards</a>
+    <%= live_patch "Flashcards", to: "/", class: "text-2xl font-bold tracking-tight hover:text-blue-200 transition" %>
   </div>
   <div class="flex items-center space-x-4">
-    <%= if @current_user do %>
-      <span class="hidden sm:inline">Hello, <%= @current_user.email %>!</span>
-      <a href="/sign-out" data-method="delete" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600 transition">Logout</a>
-    <% else %>
-      <a href="/sign-in" class="px-4 py-2 rounded hover:bg-blue-600 transition">Sign In</a>
-      <a href="/register" class="px-4 py-2 rounded bg-white text-blue-700 hover:bg-blue-100 transition">Register</a>
-    <% end %>
+    <span id="js-user-email" class="hidden sm:inline"></span>
+    <a id="js-logout-btn" href="/sign-out" data-method="delete" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600 transition" style="display:none;">Logout</a>
+    <a id="js-signin-btn" href="/sign-in" class="px-4 py-2 rounded hover:bg-blue-600 transition">Sign In</a>
+    <a id="js-register-btn" href="/register" class="px-4 py-2 rounded bg-white text-blue-700 hover:bg-blue-100 transition">Register</a>
+    <script>
+      // Helper to read a cookie by name
+      function getCookie(name) {
+        const cookies = document.cookie ? document.cookie.split('; ') : [];
+        for (let i = 0; i < cookies.length; i++) {
+          const [key, ...rest] = cookies[i].split('=');
+          if (key === name) {
+            return rest.join('=');
+          }
+        }
+        return null;
+      }
+      function updateNavFromCookie() {
+
+        const email = getCookie('user_email_display');
+        const emailSpan = document.getElementById('js-user-email');
+        const logoutBtn = document.getElementById('js-logout-btn');
+        const signinBtn = document.getElementById('js-signin-btn');
+        const registerBtn = document.getElementById('js-register-btn');
+        if (email) {
+          emailSpan.textContent = 'Hello, ' + decodeURIComponent(email) + '!';
+          emailSpan.style.display = '';
+          logoutBtn.style.display = '';
+          signinBtn.style.display = 'none';
+          registerBtn.style.display = 'none';
+        } else {
+          emailSpan.textContent = '';
+          emailSpan.style.display = 'none';
+          logoutBtn.style.display = 'none';
+          signinBtn.style.display = '';
+          registerBtn.style.display = '';
+        }
+      }
+      document.addEventListener('DOMContentLoaded', updateNavFromCookie);
+      // Always update nav after LiveView SPA navigation
+      window.addEventListener('phx:page-loading-stop', updateNavFromCookie);
+    </script>
   </div>
 </nav>
 <.flash_group flash={@flash} />

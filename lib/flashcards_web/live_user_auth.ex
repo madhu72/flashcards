@@ -1,4 +1,13 @@
+# Note: user_email is set via cookie for LiveView navigation and should be read from session in mount/3 for LiveViews.
 defmodule FlashcardsWeb.LiveUserAuth do
+  # Use fully qualified assign/3 to avoid import errors
+
+  # Assigns user_email from session to LiveView assigns
+  def on_mount(:assign_user_email, _params, session, socket) do
+    user_email = Map.get(session, "user_email")
+    {:cont, Phoenix.Component.assign(socket, :user_email, user_email)}
+  end
+
   @moduledoc """
   Authentication helpers for LiveView sessions with AshAuthentication.
   """

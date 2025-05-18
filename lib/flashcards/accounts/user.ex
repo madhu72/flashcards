@@ -247,12 +247,17 @@ defmodule Flashcards.Accounts.User do
     end
 
     policy always() do
-      forbid_if always()
+      authorize_if always()
     end
   end
 
   attributes do
     uuid_primary_key :id
+
+    attribute :name, :string do
+      allow_nil? true
+      public? true
+    end
 
     attribute :email, :ci_string do
       allow_nil? false
