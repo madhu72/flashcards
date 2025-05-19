@@ -1,12 +1,31 @@
 <nav class="bg-blue-700 text-white px-4 py-3 flex justify-between items-center shadow">
   <div class="flex items-center space-x-4">
-    <%= live_patch "Flashcards", to: "/", class: "text-2xl font-bold tracking-tight hover:text-blue-200 transition" %>
+    {live_patch("Flashcards",
+      to: "/",
+      class: "text-2xl font-bold tracking-tight hover:text-blue-200 transition"
+    )}
   </div>
   <div class="flex items-center space-x-4">
     <span id="js-user-email" class="hidden sm:inline"></span>
-    <a id="js-logout-btn" href="/sign-out" data-method="delete" class="px-4 py-2 rounded bg-red-500 hover:bg-red-600 transition" style="display:none;">Logout</a>
-    <a id="js-signin-btn" href="/sign-in" class="px-4 py-2 rounded hover:bg-blue-600 transition">Sign In</a>
-    <a id="js-register-btn" href="/register" class="px-4 py-2 rounded bg-white text-blue-700 hover:bg-blue-100 transition">Register</a>
+    <a
+      id="js-logout-btn"
+      href="/sign-out"
+      data-method="delete"
+      class="px-4 py-2 rounded bg-red-500 hover:bg-red-600 transition"
+      style="display:none;"
+    >
+      Logout
+    </a>
+    <a id="js-signin-btn" href="/sign-in" class="px-4 py-2 rounded hover:bg-blue-600 transition">
+      Sign In
+    </a>
+    <a
+      id="js-register-btn"
+      href="/register"
+      class="px-4 py-2 rounded bg-white text-blue-700 hover:bg-blue-100 transition"
+    >
+      Register
+    </a>
     <script>
       // Helper to read a cookie by name
       function getCookie(name) {

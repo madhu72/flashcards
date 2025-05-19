@@ -3,20 +3,41 @@
   <p class="text-zinc-600 mb-8">Welcome back! Please enter your credentials to continue.</p>
   <.simple_form for={@form} action={@action} method="post" class="w-full max-w-md space-y-6">
     <div>
-      <.input type="email" name="user[email]" label="Email" value={@form[:email]} required autofocus />
+      <.input
+        type="email"
+        name="user[email]"
+        label="Email"
+        value={@form[:email]}
+        required
+        autofocus
+      />
     </div>
     <div>
-      <.input type="password" name="user[password]" label="Password" value={@form[:password]} required />
+      <.input
+        type="password"
+        name="user[password]"
+        label="Password"
+        value={@form[:password]}
+        required
+      />
     </div>
     <div class="flex justify-between items-center">
       <label class="flex items-center text-sm">
-        <input type="checkbox" name="remember_me" class="rounded border-orange-400 text-orange-500 focus:ring-orange-500 mr-2" />
-        Remember me
+        <input
+          type="checkbox"
+          name="remember_me"
+          class="rounded border-orange-400 text-orange-500 focus:ring-orange-500 mr-2"
+        /> Remember me
       </label>
       <a href="/auth/reset" class="text-orange-600 hover:underline text-sm">Forgot password?</a>
     </div>
     <div class="pt-4">
-      <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg shadow transition">Sign In</button>
+      <button
+        type="submit"
+        class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg shadow transition"
+      >
+        Sign In
+      </button>
     </div>
   </.simple_form>
   <div class="mt-8 text-zinc-500 text-sm">
@@ -29,13 +50,29 @@
 <div class="flex flex-col justify-center items-center w-full md:w-1/2 px-8 md:px-12 py-12 md:py-16 text-center">
   <div class="max-w-md">
     <h3 class="text-3xl font-extrabold text-orange-600 mb-4">What is FlashCards?</h3>
-    <p class="text-zinc-700 text-lg mb-6">FlashCards is your smart companion for mastering any subject, skill, or language. Create, organize, and study interactive flashcards—anytime, anywhere.</p>
+    <p class="text-zinc-700 text-lg mb-6">
+      FlashCards is your smart companion for mastering any subject, skill, or language. Create, organize, and study interactive flashcards—anytime, anywhere.
+    </p>
     <ul class="text-left text-zinc-700 space-y-4 mb-8">
-      <li><span class="font-bold text-orange-500">Effortless Creation:</span> Add cards with text, images, or code. Organize by decks and subjects.</li>
-      <li><span class="font-bold text-orange-500">Smart Study Modes:</span> Practice with spaced repetition, quizzes, and review sessions for better retention.</li>
-      <li><span class="font-bold text-orange-500">Collaboration:</span> Invite friends or classmates to study together and share your decks.</li>
-      <li><span class="font-bold text-orange-500">Progress Tracking:</span> See your stats, streaks, and celebrate your learning milestones.</li>
+      <li>
+        <span class="font-bold text-orange-500">Effortless Creation:</span>
+        Add cards with text, images, or code. Organize by decks and subjects.
+      </li>
+      <li>
+        <span class="font-bold text-orange-500">Smart Study Modes:</span>
+        Practice with spaced repetition, quizzes, and review sessions for better retention.
+      </li>
+      <li>
+        <span class="font-bold text-orange-500">Collaboration:</span>
+        Invite friends or classmates to study together and share your decks.
+      </li>
+      <li>
+        <span class="font-bold text-orange-500">Progress Tracking:</span>
+        See your stats, streaks, and celebrate your learning milestones.
+      </li>
     </ul>
-    <p class="text-orange-700 font-semibold">Join thousands of learners and make studying fun, effective, and social!</p>
+    <p class="text-orange-700 font-semibold">
+      Join thousands of learners and make studying fun, effective, and social!
+    </p>
   </div>
 </div>

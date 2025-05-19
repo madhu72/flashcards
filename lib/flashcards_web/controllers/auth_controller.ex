@@ -18,7 +18,11 @@ defmodule FlashcardsWeb.AuthController do
     |> put_session("user_id", user.id)
     |> assign(:current_user, user)
     |> put_resp_cookie("user_email", user.email, sign: true)
-    |> put_resp_cookie("user_email_display", to_string(user.email), sign: false, path: "/", http_only: false)
+    |> put_resp_cookie("user_email_display", to_string(user.email),
+      sign: false,
+      path: "/",
+      http_only: false
+    )
     |> put_flash(:info, message)
     |> put_flash(:set_user_email, user.email)
     |> redirect(to: return_to)

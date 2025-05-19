@@ -36,39 +36,45 @@ defmodule FlashcardsWeb.Router do
     end
 
     get "/", PageController, :home
+
     live_session :default, on_mount: [{FlashcardsWeb.LiveUserAuth, :assign_user_email}] do
       live "/flashcards", FlashcardsLive
       live "/dashboard", DashboardLive
       live "/play", PlayLive
     end
+
     get "/flashcards/import", FlashcardImportController, :new
     post "/flashcards/import", FlashcardImportController, :create
-    auth_routes AuthController, Flashcards.Accounts.User, path: "/auth"
-    sign_out_route AuthController
+    auth_routes(AuthController, Flashcards.Accounts.User, path: "/auth")
+    sign_out_route(AuthController)
 
     # Remove these if you'd like to use your own authentication views
-    sign_in_route register_path: "/register",
-                  reset_path: "/reset",
-                  auth_routes_prefix: "/auth",
-                  on_mount: [{FlashcardsWeb.LiveUserAuth, :live_no_user}],
-                  overrides: [
-                    FlashcardsWeb.AuthOverrides,
-                    AshAuthentication.Phoenix.Overrides.Default
-                  ],
-                  layout: {FlashcardsWeb.Layouts, :auth}
-
+    sign_in_route(
+      register_path: "/register",
+      reset_path: "/reset",
+      auth_routes_prefix: "/auth",
+      on_mount: [{FlashcardsWeb.LiveUserAuth, :live_no_user}],
+      overrides: [
+        FlashcardsWeb.AuthOverrides,
+        AshAuthentication.Phoenix.Overrides.Default
+      ],
+      layout: {FlashcardsWeb.Layouts, :auth}
+    )
 
     # Remove this if you do not want to use the reset password feature
-    reset_route auth_routes_prefix: "/auth",
-                overrides: [
-                  FlashcardsWeb.AuthOverrides,
-                  AshAuthentication.Phoenix.Overrides.Default
-                ]
+    reset_route(
+      auth_routes_prefix: "/auth",
+      overrides: [
+        FlashcardsWeb.AuthOverrides,
+        AshAuthentication.Phoenix.Overrides.Default
+      ]
+    )
 
     # Remove this if you do not use the confirmation strategy
-    confirm_route Flashcards.Accounts.User, :confirm_new_user,
+    confirm_route(Flashcards.Accounts.User, :confirm_new_user,
       auth_routes_prefix: "/auth",
       overrides: [FlashcardsWeb.AuthOverrides, AshAuthentication.Phoenix.Overrides.Default]
+    )
 
     # Remove this if you do not use the magic link strategy.
     magic_sign_in_route(Flashcards.Accounts.User, :magic_link,

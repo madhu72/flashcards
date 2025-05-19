@@ -8,6 +8,18 @@ defmodule Flashcards.Flashcards.Test do
     repo Flashcards.Repo
   end
 
+  actions do
+    create :create do
+      accept [:user_id, :group_id, :know_count, :dont_know_count, :show_count]
+    end
+
+    update :update do
+      accept [:know_count, :dont_know_count, :show_count]
+    end
+
+    defaults [:read, :destroy]
+  end
+
   attributes do
     uuid_primary_key :id
     attribute :user_id, :uuid, allow_nil?: false
@@ -20,15 +32,5 @@ defmodule Flashcards.Flashcards.Test do
 
   relationships do
     has_many :scores, Flashcards.Flashcards.Score, destination_attribute: :test_id
-  end
-
-  actions do
-    create :create do
-      accept [:user_id, :group_id, :know_count, :dont_know_count, :show_count]
-    end
-    update :update do
-      accept [:know_count, :dont_know_count, :show_count]
-    end
-    defaults [:read, :destroy]
   end
 end

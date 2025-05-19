@@ -115,24 +115,16 @@ defmodule FlashcardsWeb.FlashcardsLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class="w-screen h-screen flex flex-col">
-      <!-- Header -->
-
-      <div class="flex flex-1 overflow-hidden">
-        <!-- Left Nav -->
-        <nav class="flex-none w-48 bg-blue-50 border-r border-blue-100 flex flex-col items-center py-8">
-          <div class="mb-6 font-semibold text-blue-700">Navigation</div>
-          <ul class="space-y-4 w-full text-center">
-            <li><%= live_patch "All Flashcards", to: "/flashcards", class: "text-blue-700 hover:underline font-medium" %></li>
-            <li><%= live_patch "Import", to: "/flashcards/import", class: "text-blue-700 hover:underline font-medium" %></li>
-          </ul>
-        </nav>
-        <!-- Main Content -->
-        <main class="flex-1 flex flex-col items-center justify-center bg-gray-50 overflow-hidden">
-          <div class="w-full max-w-2xl flex-1 flex flex-col">
-            <h2 class="text-3xl font-bold mb-6 mt-6 text-blue-700 text-center">All Flashcards</h2>
-            <div class="flex-1 overflow-y-auto rounded-xl shadow-lg bg-white p-6 mb-4" style="max-height: 60vh;">
-              <ul class="divide-y divide-gray-200">
+    <div class="min-h-screen flex flex-col items-center pt-10 bg-gradient-to-br from-blue-100 via-blue-300 to-blue-500">
+      <main class="w-full max-w-2xl flex flex-col items-center justify-center flex-1">
+        <div class="w-full flex justify-start mb-2">
+          <.link patch="/dashboard" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            ← Back to Dashboard
+          </.link>
+        </div>
+        <h2 class="text-3xl font-bold mb-6 mt-6 text-blue-700 text-center">All Flashcards</h2>
+        <div class="flex-1 overflow-y-auto rounded-xl shadow-lg bg-white p-6 mb-4 w-full" style="max-height: 60vh;">
+          <ul class="divide-y divide-gray-200">
                 <%= for card <- @flashcards do %>
                   <li class="my-6">
                     <div
@@ -169,7 +161,7 @@ defmodule FlashcardsWeb.FlashcardsLive do
                   if @page == 1, do: "bg-blue-100 text-blue-400", else: "bg-blue-200 text-blue-900"}
                 disabled={@page == 1}
               >Prev</button>
-              <span class="text-gray-700">Page <%= @page %> of <%= ceil(@total_count / @page_size) %></span>
+              <span class="text-gray-700 px-2">Page <%= @page %> of <%= ceil(@total_count / @page_size) %></span>
               <button
                 phx-click="next_page"
                 class={"px-4 py-2 rounded font-semibold disabled:opacity-50 " <>
@@ -177,22 +169,8 @@ defmodule FlashcardsWeb.FlashcardsLive do
                 disabled={@page * @page_size >= @total_count}
               >Next</button>
             </div>
-          </div>
         </main>
-        <!-- Right Nav -->
-        <aside class="flex-none w-48 bg-blue-50 border-l border-blue-100 flex flex-col items-center py-8">
-          <div class="mb-6 font-semibold text-blue-700">Quick Links</div>
-          <ul class="space-y-4 w-full text-center">
-            <li><a href="https://hexdocs.pm/ash" class="text-blue-700 hover:underline font-medium" target="_blank">Ash Docs</a></li>
-            <li><a href="https://hexdocs.pm/phoenix_live_view" class="text-blue-700 hover:underline font-medium" target="_blank">LiveView Docs</a></li>
-          </ul>
-        </aside>
       </div>
-      <!-- Footer -->
-      <footer class="flex-none h-12 bg-gray-100 border-t border-gray-200 flex items-center justify-center text-gray-500 text-sm">
-        &copy; <%= Date.utc_today().year %> Flashcards App. All rights reserved.
-      </footer>
-    </div>
     """
   end
 

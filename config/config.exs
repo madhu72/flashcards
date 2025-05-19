@@ -8,9 +8,10 @@
 import Config
 
 # Enable AshAuthentication password strategy
-config :ash_authentication, strategies: [
-  password: [enabled?: true]
-]
+config :ash_authentication,
+  strategies: [
+    password: [enabled?: true]
+  ]
 
 config :ash,
   allow_forbidden_field_for_relationships_by_default?: true,

@@ -6,48 +6,48 @@ defmodule Flashcards.Accounts.User do
     extensions: [AshAuthentication],
     data_layer: AshPostgres.DataLayer
 
+  postgres do
+    table "users"
+    repo Flashcards.Repo
+  end
+
   authentication do
     add_ons do
       log_out_everywhere do
-        apply_on_password_change? true
+        apply_on_password_change?(true)
       end
 
       confirmation :confirm_new_user do
-        monitor_fields [:email]
-        confirm_on_create? true
-        confirm_on_update? false
-        require_interaction? true
-        confirmed_at_field :confirmed_at
-        auto_confirm_actions [:sign_in_with_magic_link, :reset_password_with_token]
-        sender Flashcards.Accounts.User.Senders.SendNewUserConfirmationEmail
+        monitor_fields([:email])
+        confirm_on_create?(true)
+        confirm_on_update?(false)
+        require_interaction?(true)
+        confirmed_at_field(:confirmed_at)
+        auto_confirm_actions([:sign_in_with_magic_link, :reset_password_with_token])
+        sender(Flashcards.Accounts.User.Senders.SendNewUserConfirmationEmail)
       end
     end
 
     tokens do
-      enabled? true
-      token_resource Flashcards.Accounts.Token
-      signing_secret Flashcards.Secrets
-      store_all_tokens? true
-      require_token_presence_for_authentication? true
+      enabled?(true)
+      token_resource(Flashcards.Accounts.Token)
+      signing_secret(Flashcards.Secrets)
+      store_all_tokens?(true)
+      require_token_presence_for_authentication?(true)
     end
 
     strategies do
       password :password do
-        identity_field :email
+        identity_field(:email)
 
         resettable do
-          sender Flashcards.Accounts.User.Senders.SendPasswordResetEmail
+          sender(Flashcards.Accounts.User.Senders.SendPasswordResetEmail)
           # these configurations will be the default in a future release
-          password_reset_action_name :reset_password_with_token
-          request_password_reset_action_name :request_password_reset_token
+          password_reset_action_name(:reset_password_with_token)
+          request_password_reset_action_name(:request_password_reset_token)
         end
       end
     end
-  end
-
-  postgres do
-    table "users"
-    repo Flashcards.Repo
   end
 
   actions do
@@ -173,12 +173,16 @@ defmodule Flashcards.Accounts.User do
       validate AshAuthentication.Strategy.Password.PasswordConfirmationValidation
 
       # DEBUG: Log errors if registration fails
-      after_action fn result, _changeset, _context ->
+      after_action(fn result, _changeset, _context ->
         case result do
-          {:error, error} -> IO.inspect(error, label: "REGISTER ERROR"); result
-          _ -> result
+          {:error, error} ->
+            IO.inspect(error, label: "REGISTER ERROR")
+            result
+
+          _ ->
+            result
         end
-      end
+      end)
 
       metadata :token, :string do
         description "A JWT that can be used to authenticate the user."

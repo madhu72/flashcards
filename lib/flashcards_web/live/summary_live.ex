@@ -28,10 +28,13 @@ defmodule FlashcardsWeb.SummaryLive do
   end
 
   def render(assigns) do
-    nonzero_tests = Enum.filter(assigns.tests, fn test ->
-      (test.know_count > 0) or (test.dont_know_count > 0) or (test.show_count > 0)
-    end)
+    nonzero_tests =
+      Enum.filter(assigns.tests, fn test ->
+        test.know_count > 0 or test.dont_know_count > 0 or test.show_count > 0
+      end)
+
     assigns = Map.put(assigns, :nonzero_tests, nonzero_tests)
+
     ~H"""
     <div class="mt-8 p-8 bg-white rounded-xl shadow">
       <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Test Summary Report</h2>
@@ -51,11 +54,13 @@ defmodule FlashcardsWeb.SummaryLive do
           <tbody>
             <%= for test <- @nonzero_tests do %>
               <tr>
-                <td class="py-2 px-4 border-b"><%= Timex.format!(test.inserted_at, "%Y-%m-%d %H:%M", :strftime) %></td>
-                <td class="py-2 px-4 border-b"><%= @group_map[test.group_id] || test.group_id %></td>
-                <td class="py-2 px-4 border-b text-green-800 font-bold"><%= test.know_count %></td>
-                <td class="py-2 px-4 border-b text-yellow-800 font-bold"><%= test.dont_know_count %></td>
-                <td class="py-2 px-4 border-b text-blue-800 font-bold"><%= test.show_count %></td>
+                <td class="py-2 px-4 border-b">
+                  {Timex.format!(test.inserted_at, "%Y-%m-%d %H:%M", :strftime)}
+                </td>
+                <td class="py-2 px-4 border-b">{@group_map[test.group_id] || test.group_id}</td>
+                <td class="py-2 px-4 border-b text-green-800 font-bold">{test.know_count}</td>
+                <td class="py-2 px-4 border-b text-yellow-800 font-bold">{test.dont_know_count}</td>
+                <td class="py-2 px-4 border-b text-blue-800 font-bold">{test.show_count}</td>
               </tr>
             <% end %>
           </tbody>

@@ -66,7 +66,9 @@ config :flashcards, FlashcardsWeb.Endpoint,
 # Enable dev routes for dashboard and mailbox
 config :flashcards, dev_routes: true
 
-config :flashcards, :token_signing_secret, "2nwE9ZCnV/HUcPcw6EYDQ/ABmXUiL8pi4dOGMub4wJIaq6j5WnYTnFxGMAI5KLCs"
+config :flashcards,
+       :token_signing_secret,
+       "2nwE9ZCnV/HUcPcw6EYDQ/ABmXUiL8pi4dOGMub4wJIaq6j5WnYTnFxGMAI5KLCs"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"

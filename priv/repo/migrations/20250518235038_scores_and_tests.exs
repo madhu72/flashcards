@@ -8,7 +8,6 @@ defmodule Flashcards.Repo.Migrations.ScoresAndTests do
   use Ecto.Migration
 
   def up do
-
     alter table(:tests) do
       modify :show_count, :bigint, null: true
       modify :dont_know_count, :bigint, null: true

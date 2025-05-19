@@ -24,7 +24,8 @@ defmodule Flashcards.Flashcards do
 
     filtered =
       data
-      |> Enum.filter(&is_map(&1) and Map.has_key?(&1, :question) and Map.has_key?(&1, :answer))
+      |> Enum.filter(&(is_map(&1) and Map.has_key?(&1, :question) and Map.has_key?(&1, :answer)))
+
     IO.inspect(filtered, label: "FILTERED DATA TO IMPORT")
 
     imported =
@@ -33,13 +34,18 @@ defmodule Flashcards.Flashcards do
         IO.inspect(card, label: "CARD TO CREATE")
         result = Ash.create(Flashcard, card)
         IO.inspect({card, result}, label: "CREATE RESULT")
+
         case result do
-          {:ok, _card} -> :ok
-          {:error, err} -> IO.inspect(err, label: "CREATE ERROR"); :error
+          {:ok, _card} ->
+            :ok
+
+          {:error, err} ->
+            IO.inspect(err, label: "CREATE ERROR")
+            :error
         end
       end)
 
-    {:ok, Enum.count(imported, & &1 == :ok)}
+    {:ok, Enum.count(imported, &(&1 == :ok))}
   rescue
     e -> {:error, Exception.message(e)}
   end
