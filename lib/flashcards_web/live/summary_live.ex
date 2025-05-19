@@ -2,14 +2,23 @@ defmodule FlashcardsWeb.SummaryLive do
   use Phoenix.LiveView
   alias Flashcards.Flashcards.Test
 
+  import Ash.Query
+  import Ash.Expr
+
   def mount(_params, %{"user_id" => user_id}, socket) do
     tests = get_tests(user_id)
-    {:ok, assign(socket, tests: tests, user_id: user_id)}
-  end
+    group_ids = Enum.map(tests, & &1.group_id)
+    ids = Enum.uniq(group_ids)
 
-  import Ash.Query
-  import Ash.Filter
-  import Ash.Expr
+    group_query =
+      Flashcards.Flashcards.FlashcardGroup
+      |> Ash.Query.new()
+      |> Ash.Query.filter(expr(id in ^ids))
+
+    groups = Ash.read!(group_query)
+    group_map = Map.new(groups, fn g -> {g.id, g.name} end)
+    {:ok, assign(socket, tests: tests, user_id: user_id, group_map: group_map)}
+  end
 
   defp get_tests(user_id) do
     Test
@@ -43,7 +52,7 @@ defmodule FlashcardsWeb.SummaryLive do
             <%= for test <- @nonzero_tests do %>
               <tr>
                 <td class="py-2 px-4 border-b"><%= Timex.format!(test.inserted_at, "%Y-%m-%d %H:%M", :strftime) %></td>
-                <td class="py-2 px-4 border-b"><%= test.group_id %></td>
+                <td class="py-2 px-4 border-b"><%= @group_map[test.group_id] || test.group_id %></td>
                 <td class="py-2 px-4 border-b text-green-800 font-bold"><%= test.know_count %></td>
                 <td class="py-2 px-4 border-b text-yellow-800 font-bold"><%= test.dont_know_count %></td>
                 <td class="py-2 px-4 border-b text-blue-800 font-bold"><%= test.show_count %></td>
