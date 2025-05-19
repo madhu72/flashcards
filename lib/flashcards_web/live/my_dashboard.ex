@@ -17,11 +17,30 @@ defmodule FlashcardsWeb.MyDashboard do
   end
 
   def handle_event("toggle_flashcards", _params, socket) do
-    {:noreply, update(socket, :show_flashcards, &(!&1))}
+    {:noreply,
+      socket
+      |> assign(:show_flashcards, !socket.assigns[:show_flashcards])
+      |> assign(:show_play, false)
+      |> assign(:show_summary, false)
+    }
   end
 
   def handle_event("toggle_play", _params, socket) do
-    {:noreply, update(socket, :show_play, &(!&1))}
+    {:noreply,
+      socket
+      |> assign(:show_play, !socket.assigns[:show_play])
+      |> assign(:show_flashcards, false)
+      |> assign(:show_summary, false)
+    }
+  end
+
+  def handle_event("toggle_summary", _params, socket) do
+    {:noreply,
+      socket
+      |> assign(:show_summary, !(socket.assigns[:show_summary] || false))
+      |> assign(:show_play, false)
+      |> assign(:show_flashcards, false)
+    }
   end
 
   def render(assigns) do
@@ -48,6 +67,11 @@ defmodule FlashcardsWeb.MyDashboard do
           <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           Play
         </button>
+        <button phx-click="toggle_summary" phx-target={@myself}
+          class="flex items-center gap-2 px-6 py-2 rounded bg-green-600 text-white font-bold shadow border-2 border-green-600 hover:bg-green-700 hover:border-green-800 transition">
+          <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17h16M4 13h16M4 9h16M4 5h16"/></svg>
+          Summary
+        </button>
       </div>
       <%= if @show_flashcards do %>
         <.live_component
@@ -67,6 +91,9 @@ defmodule FlashcardsWeb.MyDashboard do
           user_id={Map.get(assigns, :user_id)}
           groups={groups}
         />
+      <% end %>
+      <%= if assigns[:show_summary] do %>
+        <%= live_render(@socket, FlashcardsWeb.SummaryLive, id: "summary-#{@user_id}", session: %{"user_id" => @user_id}) %>
       <% end %>
 
     </div>

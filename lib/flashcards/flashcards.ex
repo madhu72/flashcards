@@ -5,6 +5,8 @@ defmodule Flashcards.Flashcards do
     resource Flashcards.Flashcards.Flashcard
     resource Flashcards.Flashcards.FlashcardGroup
     resource Flashcards.Accounts.User
+    resource Flashcards.Flashcards.Test
+    resource Flashcards.Flashcards.Score
   end
 
   alias Flashcards.Flashcards.Flashcard

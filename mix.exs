@@ -33,6 +33,7 @@ defmodule Flashcards.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:timex, "~> 3.7"},
       {:picosat_elixir, "~> 0.2"},
       {:bcrypt_elixir, "~> 3.0"},
       {:ash_authentication, "~> 4.8"},
